@@ -7,7 +7,11 @@ def emotion_detector(text_to_analyse):
     header = {"grpc-metadata-mm-model-id": "emotion_aggregated-workflow_lang_en_stock"}
 
     response = requests.post(url, json = my_json, headers=header)
-    final_response = format_response(response)
+    if response.status_code == 200:
+        final_response = format_response(response)
+    elif response.status_code == 400:
+        final_response = None
+
     return final_response
 
 def format_response(response):
